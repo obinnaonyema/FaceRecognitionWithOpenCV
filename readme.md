@@ -18,4 +18,4 @@ In this project we implement face recognition with OpenCV. The first version use
 
 ## Implementation
 ### Version 1
-![Webcam page](Static/assets/webcam_page.jpg)
+![Webcam page](static/assets/webcam_page.JPG)
