@@ -1,0 +1,50 @@
+body {
+    margin:0;
+    font-family: sans-serif;
+}
+
+#camera{
+    width: 350px;
+    height: 350px;
+    border:1px solid;
+}
+
+.float-container {
+    border: 3px solid #fff;
+    padding: 20px;
+}
+
+.float-child {
+    width: 30%;
+    float: left;
+    padding: 10px;
+    border: 2px solid red;
+}  
+
+#results{
+    width: 350px;
+    height: 350px;
+    border:1px solid;
+}
+
+#processed{
+    width: 350px;
+    height: 350px;
+    border:1px solid;
+}
+
+#logo{
+    margin: auto;
+    width: 50px;
+    vertical-align:bottom;
+}
+
+#page-header{
+    text-align: center;
+}
+
+#landing-page-photo{
+    margin: auto;
+    width: 50%
+}
+

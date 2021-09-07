@@ -1,0 +1,92 @@
+{% extends 'base.html' %} 
+
+{% block head %} 
+
+{% endblock %}
+
+{% block body %} 
+
+<h1 id="page-header">Face Recognition with OpenCV</h1>
+<h3 id="page-header">File Upload</h3>
+<div>
+
+    <div >
+        <div >
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            <div >
+                <form method=post enctype=multipart/form-data>
+                   <input type=file name=file onchange="loadFile(event)">
+                   <input type=submit value=Upload class="btn btn-primary">
+                   <!--<button onclick="saveSnap()">Process photo</button>-->
+                </form>
+                <img id="output" alt="" width="40%" height="40%" />
+             </div>
+        </div>
+
+        <div>
+            {% if data %}
+            <div id ="processed" width="40%" height="40%" >
+                <p>Image Recognition returned the following: </p>
+                <img src="{{ url_for('static',filename='downloads/')}}{{ data }}" style="max-width: 350px;
+                max-height: 350px;"/>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+        
+</div>
+
+<script>
+    var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+    };
+    
+    
+    function saveSnap(){
+    document.getElementById('processed').innerHTML = 
+    '<img id="result" src="static/assets/loading-buffer.gif" width=350 height=300/>';    
+   // Get base64 value from <img id='output'> source
+    
+    var base64image = document.getElementById('output');
+	base64image.src = URL.createObjectURL(event.target.files[0]);
+
+   //var base64image = document.getElementById("output").src;
+
+    var sender = new XMLHttpRequest();
+    sender.open("POST", 'upload');
+
+    sender.setRequestHeader("Content-Type", "application/json");
+
+    sender.onreadystatechange = function () {
+    if (sender.readyState === 4) {
+        console.log(sender.status);
+        console.log(sender.responseText);
+
+        document.getElementById('processed').innerHTML = 
+        '<img id="result" src="'+sender.responseText+'" width=350 height=300/>';
+    }};
+
+
+    data = JSON.stringify({image: base64image});
+
+    sender.send(data);
+    // to turn off the webcam
+    //Webcam.reset()
+
+}
+</script>
+
+
+
+{% endblock %}

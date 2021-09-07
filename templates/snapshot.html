@@ -1,0 +1,102 @@
+{% extends 'base.html' %} 
+
+{% block head %} 
+
+{% endblock %}
+
+{% block body %} 
+
+<h1 id="page-header">Face Recognition with OpenCV</h1>
+<h3 id="page-header">Webcam needs to be turned on</h3>
+<div>
+
+    <div class="float-container">
+        <div class="float-child">
+            <div id="camera"></div>
+        </div>
+
+        <div class="float-child">
+            <div id ="results"></div>
+        </div>
+
+        <div class="float-child">
+            <div id ="processed"></div>
+        </div>
+    </div>
+
+    <div style="padding:10px; margin-top: 20px;">
+    <button onclick="take_snapshot()">Take snapshot</button>
+    <input type=button value="Process Snapshot" onClick="saveSnap()">
+    </div>
+        
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+
+<script>
+    // load webcam
+    Webcam.set({
+        width:350,
+        height:350,
+        image_format:'jpeg',
+        jpeg_quality:90
+    })
+
+    Webcam.attach("camera")
+
+    function take_snapshot(){
+        Webcam.snap( function(data_uri) {
+       // display results in page
+       document.getElementById('results').innerHTML = 
+        '<img id="imageprev" src="'+data_uri+'" width=350 height=300/>';
+        } );
+
+        // var base64image = document.getElementById("data_uri").src;
+        // Webcam.upload(base64image, '\\upload',function(code,text) {
+        // console.log('saved successfully');
+        // console.log(text)
+        // });
+    }
+
+    function saveSnap(){
+    document.getElementById('processed').innerHTML = 
+    '<img id="result" src="static/assets/loading-buffer.gif" width=350 height=300/>';    
+   // Get base64 value from <img id='imageprev'> source
+   var base64image = document.getElementById("imageprev").src;
+   //console.log(base64image)
+
+//    $.post('video',base64image,function(code,text){
+//        console.log('Sent successfully')
+//    })
+
+//    Webcam.upload( base64image, 'snapshot', function(code, text) {
+//         console.log('Saved successfully');
+//        //console.log(text);
+    var sender = new XMLHttpRequest();
+    sender.open("POST", 'snapshot');
+
+    sender.setRequestHeader("Content-Type", "application/json");
+
+    sender.onreadystatechange = function () {
+    if (sender.readyState === 4) {
+        console.log(sender.status);
+        console.log(sender.responseText);
+
+        document.getElementById('processed').innerHTML = 
+        '<img id="result" src="'+sender.responseText+'" width=350 height=300/>';
+    }};
+
+
+    data = JSON.stringify({image: base64image});
+
+    sender.send(data);
+    // to turn off the webcam
+    //Webcam.reset()
+
+}
+</script>
+
+
+<div id="logo">  
+    <img id="logo" src="static/assets/Access_AI_lab_2.jpg" width=10% height=10% />
+</div>
+{% endblock %}

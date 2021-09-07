@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+
+{% block head %} 
+
+{% endblock %}
+
+{% block body %} 
+<div>
+<h1 id="page-header">Face Recognition with OpenCV</h1>
+</div>
+
+
+<div>
+    <form method="GET" action="/snapshot">
+    <input type="submit" value="Try with webcam (under maintenance)" />
+    <!--<input type="image" alt="Try it out" src="static/assets/try_now.jpg"  style="width: 272px; height: 90px">-->
+   </form>
+</div>  
+
+<div>
+    <form method="GET" action="/upload">
+    <input type="submit" value="Upload an image" />
+    <!--<input type="image" alt="Try it out" src="static/assets/try_now.jpg"  style="width: 272px; height: 90px">-->
+   </form>
+</div> 
+
+
+
+
+</div>
+{% endblock %}
