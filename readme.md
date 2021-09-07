@@ -15,3 +15,7 @@ In this project we implement face recognition with OpenCV. The first version use
 * OpenCV
 * Numpy
 * Face-recognition
+
+## Implementation
+### Version 1
+[Webcam page](Static/assets/webcam_page.jpg)
